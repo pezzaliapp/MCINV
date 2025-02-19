@@ -25,15 +25,21 @@
 <body>
     <h1>Simple Price Calculator</h1>
 
+    <h2>Calcolo Prezzo Netto</h2>
     <input type="number" id="price" placeholder="Prezzo Lordo (€)" step="0.01"><br>
     <input type="number" id="discount" placeholder="Sconto (%)" step="0.0001"><br>
     <input type="number" id="margin" placeholder="Margine (%)" step="0.0001"><br>
-
     <button onclick="calculateNetPrice()">Calcola Prezzo Netto</button>
-
     <div class="result" id="result"></div>
 
+    <h2>Calcolo Inverso (Trova Sconto)</h2>
+    <input type="number" id="desiredNetPrice" placeholder="Prezzo Netto Desiderato (€)" step="0.01"><br>
+    <button onclick="calculateInverse()">Calcola Sconto Necessario</button>
+    <div class="result" id="inverseResult"></div>
+
     <script>
+        let originalPrice = 0;
+
         function calculateNetPrice() {
             const price = parseFloat(document.getElementById('price').value);
             const discount = parseFloat(document.getElementById('discount').value);
@@ -44,13 +50,33 @@
                 return;
             }
 
-            // Calcolo prezzo scontato con maggiore precisione
+            originalPrice = price;
+
+            // Calcolo prezzo scontato
             const discountedPrice = price * (1 - discount / 100);
 
             // Calcolo prezzo netto con margine
             const netPrice = discountedPrice / (1 - margin / 100);
 
             document.getElementById('result').innerText = `Prezzo Netto: € ${netPrice.toFixed(2)}`;
+        }
+
+        function calculateInverse() {
+            const desiredNetPrice = parseFloat(document.getElementById('desiredNetPrice').value);
+            const margin = parseFloat(document.getElementById('margin').value);
+
+            if (isNaN(desiredNetPrice) || isNaN(originalPrice) || originalPrice === 0 || isNaN(margin)) {
+                document.getElementById('inverseResult').innerText = 'Assicurati di aver calcolato prima il prezzo netto e inserito un margine valido.';
+                return;
+            }
+
+            // Calcolo prezzo scontato necessario
+            const discountedPrice = desiredNetPrice * (1 - margin / 100);
+
+            // Calcolo sconto necessario
+            const discountNeeded = (1 - (discountedPrice / originalPrice)) * 100;
+
+            document.getElementById('inverseResult').innerText = `Sconto Necessario: ${discountNeeded.toFixed(4)}% (Prezzo Lordo: € ${originalPrice.toFixed(2)})`;
         }
     </script>
 </body>
