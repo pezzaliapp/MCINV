@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Price Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        input, button {
+            padding: 10px;
+            margin: 5px;
+            width: 200px;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Simple Price Calculator</h1>
+
+    <input type="number" id="price" placeholder="Prezzo Lordo (€)" step="0.01"><br>
+    <input type="number" id="discount" placeholder="Sconto (%)" step="0.0001"><br>
+    <input type="number" id="margin" placeholder="Margine (%)" step="0.0001"><br>
+
+    <button onclick="calculateNetPrice()">Calcola Prezzo Netto</button>
+
+    <div class="result" id="result"></div>
+
+    <script>
+        function calculateNetPrice() {
+            const price = parseFloat(document.getElementById('price').value);
+            const discount = parseFloat(document.getElementById('discount').value);
+            const margin = parseFloat(document.getElementById('margin').value);
+
+            if (isNaN(price) || isNaN(discount) || isNaN(margin)) {
+                document.getElementById('result').innerText = 'Inserisci tutti i campi correttamente.';
+                return;
+            }
+
+            // Calcolo prezzo scontato con maggiore precisione
+            const discountedPrice = price * (1 - discount / 100);
+
+            // Calcolo prezzo netto con margine
+            const netPrice = discountedPrice / (1 - margin / 100);
+
+            document.getElementById('result').innerText = `Prezzo Netto: € ${netPrice.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>
