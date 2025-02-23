@@ -42,19 +42,19 @@
     <button class="toggle-button" onclick="toggleDarkMode()">🌙 Modalità Notte</button>
 
     <h2>Calcolo Prezzo Netto</h2>
-    <input type="number" id="price" placeholder="Prezzo Lordo (€)" step="0.01"><br>
-    <input type="number" id="discount" placeholder="Sconto (%)" step="0.0001"><br>
-    <input type="number" id="margin" placeholder="Margine (%)" step="0.0001"><br>
+    <input type="text" id="price" placeholder="Prezzo Lordo (€)"><br>
+    <input type="text" id="discount" placeholder="Sconto (%)"><br>
+    <input type="text" id="margin" placeholder="Margine (%)"><br>
     <button onclick="calculateNetPrice()">Calcola Prezzo Netto</button>
     <div class="result" id="result"></div>
 
     <h2>Calcolo Inverso (Trova Sconto Necessario con Margine)</h2>
-    <input type="number" id="desiredNetPrice" placeholder="Prezzo Netto Desiderato (€)" step="0.01"><br>
+    <input type="text" id="desiredNetPrice" placeholder="Prezzo Netto Desiderato (€)"><br>
     <button onclick="calculateInverseWithMargin()">Calcola Sconto Necessario</button>
     <div class="result" id="inverseResult"></div>
 
     <h2>Calcolo Inverso (Senza Margine)</h2>
-    <input type="number" id="desiredNetPriceNoMargin" placeholder="Prezzo Netto Desiderato (€)" step="0.01"><br>
+    <input type="text" id="desiredNetPriceNoMargin" placeholder="Prezzo Netto Desiderato (€)"><br>
     <button onclick="calculateInverseNoMargin()">Calcola Sconto Diretto</button>
     <div class="result" id="inverseResultNoMargin"></div>
 
@@ -66,11 +66,22 @@
             document.body.classList.toggle('dark-mode');
         }
 
+        // Funzione per formattare numeri in stile europeo
+        function formatNumber(value) {
+            return value.toLocaleString('it-IT', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+
+        // Funzione per convertire input stringa in numero
+        function parseInput(value) {
+            if (!value) return NaN;
+            return parseFloat(value.replace(/\./g, '').replace(',', '.'));
+        }
+
         // Calcolo Prezzo Netto
         function calculateNetPrice() {
-            const price = parseFloat(document.getElementById('price').value);
-            const discount = parseFloat(document.getElementById('discount').value);
-            let margin = parseFloat(document.getElementById('margin').value);
+            const price = parseInput(document.getElementById('price').value);
+            const discount = parseInput(document.getElementById('discount').value);
+            let margin = parseInput(document.getElementById('margin').value);
 
             if (isNaN(price) || isNaN(discount)) {
                 document.getElementById('result').innerText = 'Inserisci tutti i campi correttamente.';
@@ -89,13 +100,13 @@
             // Calcolo prezzo netto con margine
             const netPrice = discountedPrice / (1 - margin / 100);
 
-            document.getElementById('result').innerText = `Prezzo Netto: € ${netPrice.toFixed(2)}`;
+            document.getElementById('result').innerText = `Prezzo Netto: € ${formatNumber(netPrice)}`;
         }
 
         // Calcolo Inverso con Margine
         function calculateInverseWithMargin() {
-            const desiredNetPrice = parseFloat(document.getElementById('desiredNetPrice').value);
-            let margin = parseFloat(document.getElementById('margin').value);
+            const desiredNetPrice = parseInput(document.getElementById('desiredNetPrice').value);
+            let margin = parseInput(document.getElementById('margin').value);
 
             if (isNaN(desiredNetPrice) || isNaN(originalPrice) || originalPrice === 0) {
                 document.getElementById('inverseResult').innerText = 'Assicurati di aver calcolato prima il prezzo netto e inserito un margine valido.';
@@ -112,12 +123,12 @@
             // Calcolo sconto necessario
             const discountNeeded = (1 - (discountedPrice / originalPrice)) * 100;
 
-            document.getElementById('inverseResult').innerText = `Sconto Necessario: ${discountNeeded.toFixed(4)}% (Prezzo Lordo: € ${originalPrice.toFixed(2)})`;
+            document.getElementById('inverseResult').innerText = `Sconto Necessario: ${formatNumber(discountNeeded)}% (Prezzo Lordo: € ${formatNumber(originalPrice)})`;
         }
 
         // Calcolo Inverso Senza Margine
         function calculateInverseNoMargin() {
-            const desiredNetPriceNoMargin = parseFloat(document.getElementById('desiredNetPriceNoMargin').value);
+            const desiredNetPriceNoMargin = parseInput(document.getElementById('desiredNetPriceNoMargin').value);
 
             if (isNaN(desiredNetPriceNoMargin) || isNaN(originalPrice) || originalPrice === 0) {
                 document.getElementById('inverseResultNoMargin').innerText = 'Assicurati di aver inserito un prezzo netto desiderato e un prezzo lordo valido.';
@@ -127,7 +138,7 @@
             // Calcolo sconto necessario senza margine
             const discountNeededNoMargin = (1 - (desiredNetPriceNoMargin / originalPrice)) * 100;
 
-            document.getElementById('inverseResultNoMargin').innerText = `Sconto Necessario (senza margine): ${discountNeededNoMargin.toFixed(4)}% (Prezzo Lordo: € ${originalPrice.toFixed(2)})`;
+            document.getElementById('inverseResultNoMargin').innerText = `Sconto Necessario (senza margine): ${formatNumber(discountNeededNoMargin)}% (Prezzo Lordo: € ${formatNumber(originalPrice)})`;
         }
     </script>
 </body>
