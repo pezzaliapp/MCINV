@@ -54,4 +54,5 @@
 ## Autore
 
 Realizzato per semplificare i calcoli di prezzo e supportare le attività quotidiane di vendita e preventivazione.
+© 2025 Alessandro Pezzali – Rilasciato sotto licenza MIT
 
