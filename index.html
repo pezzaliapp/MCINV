@@ -61,18 +61,24 @@
     <script>
         let originalPrice = 0;
 
+        // Funzione per attivare/disattivare la modalità notte
         function toggleDarkMode() {
             document.body.classList.toggle('dark-mode');
         }
 
+        // Calcolo Prezzo Netto
         function calculateNetPrice() {
             const price = parseFloat(document.getElementById('price').value);
             const discount = parseFloat(document.getElementById('discount').value);
-            const margin = parseFloat(document.getElementById('margin').value);
+            let margin = parseFloat(document.getElementById('margin').value);
 
-            if (isNaN(price) || isNaN(discount) || isNaN(margin)) {
+            if (isNaN(price) || isNaN(discount)) {
                 document.getElementById('result').innerText = 'Inserisci tutti i campi correttamente.';
                 return;
+            }
+
+            if (isNaN(margin)) {
+                margin = 0; // Se il margine è vuoto o non valido, considera 0
             }
 
             originalPrice = price;
@@ -86,13 +92,18 @@
             document.getElementById('result').innerText = `Prezzo Netto: € ${netPrice.toFixed(2)}`;
         }
 
+        // Calcolo Inverso con Margine
         function calculateInverseWithMargin() {
             const desiredNetPrice = parseFloat(document.getElementById('desiredNetPrice').value);
-            const margin = parseFloat(document.getElementById('margin').value);
+            let margin = parseFloat(document.getElementById('margin').value);
 
-            if (isNaN(desiredNetPrice) || isNaN(originalPrice) || originalPrice === 0 || isNaN(margin)) {
+            if (isNaN(desiredNetPrice) || isNaN(originalPrice) || originalPrice === 0) {
                 document.getElementById('inverseResult').innerText = 'Assicurati di aver calcolato prima il prezzo netto e inserito un margine valido.';
                 return;
+            }
+
+            if (isNaN(margin)) {
+                margin = 0; // Se il margine è vuoto o non valido, considera 0
             }
 
             // Calcolo prezzo scontato necessario
@@ -104,6 +115,7 @@
             document.getElementById('inverseResult').innerText = `Sconto Necessario: ${discountNeeded.toFixed(4)}% (Prezzo Lordo: € ${originalPrice.toFixed(2)})`;
         }
 
+        // Calcolo Inverso Senza Margine
         function calculateInverseNoMargin() {
             const desiredNetPriceNoMargin = parseFloat(document.getElementById('desiredNetPriceNoMargin').value);
 
