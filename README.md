@@ -1,58 +1,94 @@
-# Simple Price Calculator
+
+# 🕹️ MCINV – Retro Price Calculator
 
 ## Descrizione
 
-**Simple Price Calculator** è un'applicazione web intuitiva progettata per semplificare i calcoli relativi a prezzi lordi, sconti, margini e prezzi netti. È ideale per professionisti che devono gestire preventivi, offerte o semplicemente calcolare rapidamente i prezzi finali dei prodotti.
+**MCINV** è una Progressive Web App (PWA) retro-futurista ispirata al Commodore 64.  
+Rielaborazione completa della mia **storica calcolatrice di margini e sconti**, scritta in BASIC nel 1983, ora trasformata in un'app moderna e installabile.
+
+Minimal. Precisa. Estetica 8-bit.
+
+---
 
 ## Funzionalità
 
 1. **Calcolo Prezzo Netto:**
-   - Inserisci un **prezzo lordo**.
-   - Specifica lo **sconto (%)** da applicare.
-   - Inserisci il **margine (%)** desiderato.
-   - Il sistema calcola automaticamente il **prezzo netto finale** applicando lo sconto e il margine indicati.
+   - Inserisci un **prezzo lordo**
+   - Applica uno **sconto (%)**
+   - Aggiungi un **margine (%)**
+   - Calcola automaticamente il **prezzo netto finale**
 
-2. **Calcolo Inverso (Trova Sconto Necessario):**
-   - Dopo aver calcolato un prezzo netto, è possibile inserire un **prezzo netto desiderato**.
-   - Il sistema calcola lo **sconto esatto (%)** necessario da applicare al prezzo lordo originale per ottenere il prezzo netto desiderato, considerando il margine specificato.
+2. **Calcolo Inverso (con margine):**
+   - Inserisci un **prezzo netto desiderato**
+   - L'app calcola lo **sconto necessario** per raggiungerlo partendo dal prezzo lordo
+
+3. **Calcolo Inverso Diretto (senza margine):**
+   - Inserisci il netto atteso
+   - Ottieni lo **sconto diretto (%)** da applicare
+
+---
 
 ## Modalità d'Uso
 
-1. **Calcolo Prezzo Netto:**
-   - Compila i campi richiesti con il prezzo lordo, lo sconto (%) e il margine (%).
-   - Clicca su **"Calcola Prezzo Netto"**.
-   - Il risultato verrà visualizzato nella sezione dei risultati.
+- Compila i campi richiesti
+- Clicca su **RUN**
+- Il risultato viene mostrato subito in stile `>>>` terminale C64
 
-2. **Calcolo Inverso:**
-   - Dopo aver effettuato il primo calcolo, inserisci il **prezzo netto desiderato**.
-   - Clicca su **"Calcola Sconto Necessario"**.
-   - Il sistema mostrerà lo sconto percentuale richiesto e ricorderà il prezzo lordo iniziale.
+---
 
-## Vantaggi
+## Stile Retro
 
-- **Precisione:** Calcoli accurati con supporto per valori decimali fino a quattro cifre decimali.
-- **Flessibilità:** Consente di calcolare in entrambe le direzioni (dal prezzo lordo al netto e viceversa).
-- **Usabilità:** Interfaccia semplice e intuitiva, adatta a professionisti di ogni settore.
+- Font monospace, sfondo blu C64 (`#0400A0`)
+- Colori pixelati: verde brillante su sfondo blu
+- Nessuna interfaccia moderna, nessun tema dark: solo essenziale
 
-## Tecnologie Utilizzate
+---
 
-- **HTML** per la struttura.
-- **CSS** per lo stile e il layout.
-- **JavaScript** per la logica e l'interattività.
+## Codice originale (Commodore 64 – BASIC, 1983)
 
-## Esempi di Utilizzo
+```basic
+10 PRINT "CALCOLATRICE IN C64 BASIC"
+20 INPUT "PREZZO LORDO";P
+30 INPUT "SCONTO (%)";S
+40 INPUT "MARGINE (%)";M
+50 S1 = P * (1 - S / 100)
+60 NETTO = S1 / (1 - M / 100)
+70 PRINT ">>> NETTO: ";NETTO
+80 INPUT "PREZZO NETTO DESIDERATO";D
+90 DS = (1 - ((D * (1 - M / 100)) / P)) * 100
+100 PRINT ">>> SCONTO NECESSARIO: ";DS;"%"
 
-- **Commercio:** Calcolare rapidamente i prezzi netti da applicare ai clienti.
-- **Vendite:** Determinare gli sconti ideali per raggiungere obiettivi di prezzo.
-- **Gestione finanziaria:** Valutare margini di guadagno e strategie di sconto.
+🧠 Bastavano 10 righe. Nessuna dipendenza. Solo logica.
 
-## Requisiti
+⸻
 
-- Qualsiasi browser moderno (Chrome, Firefox, Edge, Safari).
-- Nessuna installazione richiesta.
+Tecnologie Usate
+	•	HTML + CSS + JS
+	•	Compatibile con tutti i browser moderni
+	•	Funzionamento offline via service-worker.js
+	•	Installabile su iPhone, Android e desktop (PWA)
 
-## Autore
+⸻
 
-Realizzato per semplificare i calcoli di prezzo e supportare le attività quotidiane di vendita e preventivazione.
-© 2025 Alessandro Pezzali – Rilasciato sotto licenza MIT
+Dove provarla
 
+🔗 Versione live:
+👉 www.alessandropezzali.it/MCINV/
+
+📁 Codice sorgente:
+👉 github.com/pezzaliapp/MCINV
+
+⸻
+
+Autore
+
+Realizzata da
+Alessandro Pezzali
+📦 pezzaliAPP.com | ☕ patreon.com/pezzaliAPP
+
+⸻
+
+Licenza
+
+MIT – Libera per uso personale e professionale.
+Distribuibile, retro-compatibile, nostalgica.
